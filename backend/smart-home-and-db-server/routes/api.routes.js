@@ -6,11 +6,12 @@ import {
     getLights,
     getLight,
     putLight,
-    adjustLight
+    adjustLight, test
 } from "../controllers/api.controller.js";
 
 const router = express.Router();
 
+router.route("/test").get(test);
 router.route("/newdeveloper").get(apiNewDeveloper);
 router.route("/newdeveloper").post(registerApp);
 router.route("/lights/:id").get(getLight);

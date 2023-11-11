@@ -1,6 +1,18 @@
 import axios from "axios";
 import properties from "../config.json" assert { type: 'json' }
 
+const test = async (req, res) => {
+    try {
+        var response = {
+            code: 1,
+            msg: "Hello from Inchara's Server"
+        }
+        res.send(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const apiNewDeveloper = async (req, res) => {
     try {
         axios({
@@ -126,4 +138,4 @@ const adjustLight = async (req, res) => {
 };
 
 
-export { apiNewDeveloper, registerApp, getLight, getLights, putLight, adjustLight };
+export { test, apiNewDeveloper, registerApp, getLight, getLights, putLight, adjustLight };
