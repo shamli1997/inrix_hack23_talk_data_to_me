@@ -2,10 +2,10 @@
     "firstname": "fn",
     "lastname": "ln",
     "email": "email",
-    "home": "800 W Renner Road",
-    "homezip": 75080,
-    "work": "1302 The Alameda",
-    "workzip": 95126,
+    "home": "1200-1250 Haight St, San Francisco",
+    "homezip": 94117,
+    "work": "354 Masonic Ave, San Francisco",
+    "workzip": 94117,
     "other": "100 Day St",
     "otherzip": 94131
 }

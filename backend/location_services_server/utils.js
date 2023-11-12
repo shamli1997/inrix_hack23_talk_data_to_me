@@ -1,5 +1,31 @@
 // Function to find the midpoint between two coordinates using Haversine formula
+import axios from "axios";
 import { getToken } from "./middleware/inrixMiddleware.js";
+import properties from "./config.json" assert { type: "json" };
+
+async function getLatLong(type) {
+  var data = [];
+  const url = `${
+    properties.http + properties.backend_port + properties.backend_api + type
+  }`;
+  console.log(url);
+  await axios({
+    method: "get",
+    url:
+      properties.http +
+      properties.backend_port +
+      properties.backend_api +
+      `${type}`,
+  })
+    .then(function (response) {
+      console.log("RESPONSE: ", response.data);
+      data = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return data;
+}
 
 function getMidpoint(coord1, coord2) {
   const lat1 = parseFloat(coord1.split(",")[0]);
@@ -32,13 +58,18 @@ function getMidpoint(coord1, coord2) {
 // Function to find a route using the Inrix API
 const findRoute = async (wp_1, wp_2) => {
   try {
-    const wp_1 = "37.770581,-122.442550";
-    const wp_2 = "37.765297,-122.442527";
+    var home_location = "home";
+    var work_location = "work";
+
+    const wp_1 = await getLatLong(home_location);
+    const wp_2 = await getLatLong(work_location);
+    var waypoint1 = `${wp_1[0]},${wp_1[1]}`;
+    var waypoint2 = `${wp_2[0]},${wp_2[1]}`;
     // Get the Inrix API token using the middleware
     console.log("Finding route...");
     const apiKey = await getToken();
     // Set up URL to query for finding a route
-    const routeUrl = `https://api.iq.inrix.com/findRoute?wp_1=${wp_1}&wp_2=${wp_2}&format=json`;
+    const routeUrl = `https://api.iq.inrix.com/findRoute?wp_1=${waypoint1}&wp_2=${waypoint2}&format=json`;
     console.log("routeURL: ", routeUrl);
 
     // Set up query method for finding a route

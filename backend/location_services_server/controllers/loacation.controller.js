@@ -29,6 +29,7 @@ const findTime = async (req, res) => {
       res.json({
         code: 1,
         msg: `It takes ${travelTimeMinutes} mins to reach home`,
+        time: travelTimeMinutes,
       });
     } else {
       // Handle the case when no route data is available
