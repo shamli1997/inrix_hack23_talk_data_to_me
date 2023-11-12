@@ -137,5 +137,62 @@ const adjustLight = async (req, res) => {
     }
 };
 
+const getRecommendation = async (req, res) => {
+    try {
+        const tvShows = [
+            "Stranger Things",
+            "The Mandalorian",
+            "The Witcher",
+            "Money Heist",
+            "The Crown",
+            "Ozark",
+            "Breaking Bad",
+            "Game of Thrones",
+            "Fleabag",
+            "The Umbrella Academy",
+            "The Queen's Gambit",
+            "Ted Lasso",
+            "The Falcon and the Winter Soldier",
+            "WandaVision",
+            "The Boys",
+            "The Handmaid's Tale",
+            "The Great",
+            "Black Mirror",
+            "Cobra Kai",
+            "Succession"
+          ];
 
-export { test, apiNewDeveloper, registerApp, getLight, getLights, putLight, adjustLight };
+          const shuffledArray = tvShows.sort(() => Math.random() - 0.5);
+          res.data = shuffledArray.slice(0, 3);
+
+          console.log(res.data)
+        res.send({ 
+            code: 1,
+            msg: 'I am sorry to hear that. How about taking some time for yourself to relax? Maybe watching a good TV show could help take your mind off things. If you are up for it, here are a few recommendations:' + res.data.join(',') 
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const callRouting = async (req, res) => {
+    try {
+        var url = properties.http + properties.inrixServerHost + properties.inrixServerPort + properties.inrixRoutingApi;
+        axios({
+            method:'get',
+            url: url
+        })
+        .then(function (response) {
+            res.send(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+callRouting();
+
+export { test, apiNewDeveloper, registerApp, getLight, getLights, putLight, adjustLight, getRecommendation };
