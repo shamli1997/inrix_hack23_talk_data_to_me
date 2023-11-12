@@ -1,6 +1,7 @@
 import React from "react";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {useState} from "react";
+import apiRequest from "../components/apiRequest";
 import "./Home.css"
 
 const keyword_extractor = require("keyword-extractor");
@@ -55,12 +56,12 @@ function Home() {
 };
 
 function extractKeyword(transcript){
-    transcript = "can you make the house"
+    transcript = "what is my schedule"
     transcript = transcript.toLowerCase();
     var opt = -1
 
     const keyWords = [
-        {raw:["find me boba stores"],high:["store","shop","restaurant"],low:["find","where"]},
+        {raw:["find me boba stores","bad day","rough day"],high:["store","shop","restaurant","hungry"],low:["find","where"]},
         {raw:["schedule"],high:[],low:[]},
         {raw:["take me home"],high:["home","work"],low:["take","get"]},
         {raw:["precondition the house","make the house"],high:["lights","heat"],low:["turn"]},
@@ -109,13 +110,17 @@ function queryTTS(opt,parameters){
     }
     else if(opt === 0){
         queryVoice("I am finding stores for you to eat at.")
-        //insert function to turn on routing.
-        queryVoice("Here is the result.")
+        apiRequest("http://localhost:3001/food").then((data)=>{
+            console.log(data)
+            queryVoice((data["code"] !== 0 ? "Here are the places I found. ":"")+data["msg"])
+        })
     }
     else if(opt === 1){
         queryVoice("I will repeat your schedule")
-        //insert function to scheduling.
-        queryVoice("Here is the result.")
+        apiRequest("http://localhost:3001/calendar").then((data)=>{
+            console.log(data)
+            queryVoice((data["code"] !== 0 ? "Here is the result.":"")+data["msg"])
+        })
     } 
     else if(opt === 2){
         queryVoice("I am calculating your route home")
