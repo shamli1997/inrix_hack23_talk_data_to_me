@@ -1,11 +1,1 @@
-{
-    "firstname": "fn",
-    "lastname": "ln",
-    "email": "email",
-    "home": "800 W Renner Road",
-    "homezip": 75080,
-    "work": "1302 The Alameda",
-    "workzip": 95126,
-    "other": "100 Day St",
-    "otherzip": 94131
-}
+{"firstname":"2fn","lastname":"ln","email":"email@gmail.com","home":"800 W Renner Street","homezip":75080,"work":"1302 The Street","workzip":95126,"other":"100 Day St","otherzip":94131}

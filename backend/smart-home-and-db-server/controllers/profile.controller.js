@@ -18,10 +18,11 @@ const getProfile = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
+    console.log(req.body)
     try {
         const dataPath = './profile.json';
-        fs.writeFile(dataPath, JSON.stringify(req.body[0]), 'utf8', (err, data) => {
-            console.log(req.body[0]);
+        fs.writeFile(dataPath, JSON.stringify(req.body), 'utf8', (err, data) => {
+            console.log(req.body);
             if (err) {
               throw err;
             }
