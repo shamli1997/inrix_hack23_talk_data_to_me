@@ -59,7 +59,6 @@ const findParkingSpots = async (req, res) => {
       msg: "Unable to determine the probability of getting a parking spot.",
     });
   }
-  // Send the travel time as the API response
 };
 
 const getMidPoint = async (req, res) => {
