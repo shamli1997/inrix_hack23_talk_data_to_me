@@ -1,41 +1,7 @@
 // inrixController.js
 import axios from "axios";
-import { getToken } from "../middleware/inrixMiddleware.js";
-
-// Function to find a route using the Inrix API
-const findRoute = async (wp_1, wp_2) => {
-  try {
-    const wp_1 = "37.770581,-122.442550";
-    const wp_2 = "37.765297,-122.442527";
-    // Get the Inrix API token using the middleware
-    console.log("Finding route...");
-    const apiKey = await getToken();
-    // Set up URL to query for finding a route
-    const routeUrl = `https://api.iq.inrix.com/findRoute?wp_1=${wp_1}&wp_2=${wp_2}&format=json`;
-    console.log("routeURL: ", routeUrl);
-
-    // Set up query method for finding a route
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-    };
-
-    // Query INRIX for finding a route using the obtained API token
-    const response = await fetch(routeUrl, requestOptions);
-    const routeData = await response.json();
-    var data = {
-      data: routeData,
-    };
-    return data;
-  } catch (error) {
-    console.error(error);
-    // res.status(500).json({ message: error.message });
-    throw new Error("Failed to find route using Inrix API");
-  }
-};
+import { response } from "express";
+import { findRoute, getMidpoint, findSpots } from "../utils.js";
 
 const findTime = async (req, res) => {
   try {
@@ -66,13 +32,50 @@ const findTime = async (req, res) => {
       });
     } else {
       // Handle the case when no route data is available
-      res.status(404).json({ code: 0, msg: "No route data available" });
+      res.status(404).json({
+        code: 0,
+        msg: "I’m sorry. I could not find the time to get back home",
+      });
     }
   } catch (error) {
     console.error(error);
     // Handle the error as needed
     res.status(500).json({ message: "Internal Server Error" });
   }
+};
+
+const findParkingSpots = async (req, res) => {
+  // Call mongoDb service to get wp_1 and wp_2
+  const grocery_cords = "37.74304518280319|-122.42438793182373";
+  const parkingData = await findSpots(grocery_cords);
+  console.log(parkingData);
+  const parkingSpot = parkingData.data.result[0];
+  const probability = parkingSpot ? parkingSpot.probability : null;
+  if (probability !== null && probability >= 0 && probability <= 100) {
+    res.json({
+      code: 1,
+      msg: `The probability of getting a parking spot when you reach ${parkingSpot.name} is ${probability}%.`,
+    });
+  } else {
+    res.json({
+      code: 1,
+      msg: "Unable to determine the probability of getting a parking spot.",
+    });
+  }
+  // Send the travel time as the API response
+  res.json({
+    code: 1,
+    msg: parkingData,
+  });
+};
+
+const getMidPoint = async (req, res) => {
+  const coord1 = "37.770581,-122.442550";
+  const coord2 = "37.765297,-122.442527";
+
+  const midPoints = await getMidpoint(coord1, coord2);
+
+  res.send(midPoints);
 };
 
 const test = async (req, res) => {
@@ -86,4 +89,4 @@ const test = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-export { test, findTime };
+export { test, findTime, findParkingSpots, getMidPoint };
