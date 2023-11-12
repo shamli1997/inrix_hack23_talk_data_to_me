@@ -8,7 +8,7 @@ async function getLatLong(type) {
   const url = `${
     properties.http + properties.backend_port + properties.backend_api + type
   }`;
-  console.log(url);
+  console.log("latlong URL=====", url);
   await axios({
     method: "get",
     url:
@@ -65,6 +65,7 @@ const findRoute = async () => {
     const wp_2 = await getLatLong(work_location);
     var waypoint1 = `${wp_1[0]},${wp_1[1]}`;
     var waypoint2 = `${wp_2[0]},${wp_2[1]}`;
+    console.log("==============", waypoint1, waypoint2);
     // Get the Inrix API token using the middleware
     console.log("Finding route...");
     const apiKey = await getToken();
