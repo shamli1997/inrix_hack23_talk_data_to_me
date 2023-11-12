@@ -19,20 +19,45 @@ Talk Data to Me is a voice assistant system designed to enhance your daily commu
 6. Preconditioning the Living Room
    - Prepare your living room for your arrival by turning on the heater and lights
 
-## Services and Technologies
+## Web Servers
 
-1. Location Service
+1. Location Server
 
    - Consumes INRIX APIs to provide routing information, parking probabilities.
 
-2. Smart Home Service
+2. Smart Home Server
 
    - Manipulates user data to control home devices such as heaters and lights.
 
-3. Entertainment Service
+3. Entertainment Server
    - Handles third-party APIs to suggest TV shows, get Calendar events and restaurant suggestions based on user mood.
 
-# Set up Backend (Node.js and Express.js)
+## Set up Backend (Node.js and Express.js)
 
 1. Clone the Repository
-   `git clone https://github.com/shamli1997/inrix_hack23_talk_data_to_me.git `
+   `git clone https://github.com/shamli1997/inrix_hack23_talk_data_to_me.git`
+2. `cd backend`
+
+### Set up Location server
+
+1. `cd location_services_server`
+2. `npm install`
+3. `npm start`
+
+### Set up Entertainment server
+
+1. `cd miscBackend`
+2. `npm install`
+3. `npm test`
+
+### Set up Smart Home server
+
+1. `cd smart-home-and-db-server`
+2. `npm install`
+3. `npm start`
+
+## Set up Frontend (React.js)
+
+1. `cd frontend`
+2. `npm install`
+3. `npm start`
