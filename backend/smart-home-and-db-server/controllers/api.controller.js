@@ -177,16 +177,41 @@ const getRecommendation = async (req, res) => {
 
 const callRouting = async (req, res) => {
     try {
-        var url = properties.http + properties.inrixServerHost + properties.inrixServerPort + properties.inrixRoutingApi;
         axios({
             method:'get',
-            url: url
+            url: 'http://localhost:4001/location/findtime'
         })
         .then(function (response) {
             if (response.data.code != 0){
                 var time = response.data.time;
-                console.log(time);
+                console.log('time',time);
             }
+            setInterval(function () {
+                setHeaterOn();
+            }, time*1000);
+            setInterval(function () {
+                setLightOn();
+            }, (time+2)*1000);
+            res.send({
+                msg: 'Success!'
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const setHeaterOn = async (req, res) => {
+    try {
+        var url = properties.heaterOn;
+        axios({
+            method:'put',
+            url: url
+        })
+        .then(function (response) {
             res.send(JSON.stringify(response.data));
         })
         .catch(function (error) {
@@ -197,6 +222,25 @@ const callRouting = async (req, res) => {
     }
 };
 
-callRouting();
+const setLightOn = async (req, res) => {
+    try {
+        var url = properties.lightOn;
+        axios({
+            method:'put',
+            url: url
+        })
+        .then(function (response) {
+            res.send(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
-export { test, apiNewDeveloper, registerApp, getLight, getLights, putLight, adjustLight, getRecommendation };
+
+
+
+export { test, apiNewDeveloper, registerApp, getLight, getLights, putLight, adjustLight, getRecommendation, callRouting }
