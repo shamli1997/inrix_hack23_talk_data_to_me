@@ -60,10 +60,6 @@ const findParkingSpots = async (req, res) => {
     });
   }
   // Send the travel time as the API response
-  res.json({
-    code: 1,
-    msg: parkingData,
-  });
 };
 
 const getMidPoint = async (req, res) => {
