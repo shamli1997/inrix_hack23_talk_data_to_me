@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { TextField, Button, Container, Stack } from '@mui/material';
 import { Link } from "react-router-dom"
 import apiRequest from "../components/apiRequest";
@@ -13,6 +13,20 @@ function Settings() {
   const [homeAddressZip, setHomeAddressZip] = useState('')
   const [workAddressZip, setWorkAddressZip] = useState('')
   const [otherAddressZip, setOtherAddressZip] = useState('')
+
+  useEffect(()=>{
+    apiRequest("http://localhost:8080/profile").then((data)=>{
+        setFirstName(data["firstname"])
+        setLastName(data["lastname"])
+        setEmail(data["email"])
+        setHomeAddress(data["home"])
+        setHomeAddressZip(data["homezip"])
+        setWorkAddress(data["work"])
+        setWorkAddressZip(data["workzip"])
+        setOtherAddress(data["other"])
+        setOtherAddressZip(data["otherzip"])
+    })
+  },[])
 
   function handleSubmit(event) {
       event.preventDefault();

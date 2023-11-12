@@ -7,7 +7,8 @@ import {
     getLights,
     getLight,
     putLight,
-    adjustLight
+    adjustLight,
+    getRecommendation
 } from "../controllers/api.controller.js";
 
 const router = express.Router();
@@ -19,4 +20,6 @@ router.route("/lights/:id").get(getLight);
 router.route("/lights").get(getLights);
 router.route("/lights/:id/:state").put(putLight);
 router.route("/lights/:id/:bri/:sat/:hue").put(adjustLight);
+router.route("/tv").get(getRecommendation);
+
 export default router;
