@@ -1,16 +1,12 @@
 // inrixController.js
 import axios from "axios";
 import { response } from "express";
-import { findRoute, getMidpoint, findSpots } from "../utils.js";
+import { findRoute, getMidpoint, findSpots, getLatLong } from "../utils.js";
 
 const findTime = async (req, res) => {
   try {
-    // Call mongoDb service to get wp_1 and wp_2
-    const wp_1 = "37.770581,-122.442550";
-    const wp_2 = "37.765297,-122.442527";
-
     // Get route data using the findRoute function
-    const routeData = await findRoute(wp_1, wp_2);
+    const routeData = await findRoute();
 
     // Check if routeData is available
     if (
@@ -71,10 +67,11 @@ const findParkingSpots = async (req, res) => {
 };
 
 const getMidPoint = async (req, res) => {
-  const coord1 = "37.770581,-122.442550";
-  const coord2 = "37.765297,-122.442527";
-
-  const midPoints = await getMidpoint(coord1, coord2);
+  const wp_1 = await getLatLong("home");
+  const wp_2 = await getLatLong("work");
+  var waypoint1 = `${wp_1[0]},${wp_1[1]}`;
+  var waypoint2 = `${wp_2[0]},${wp_2[1]}`;
+  const midPoints = await getMidpoint(waypoint1, waypoint2);
 
   res.send(midPoints);
 };

@@ -56,7 +56,7 @@ function getMidpoint(coord1, coord2) {
   return result;
 }
 // Function to find a route using the Inrix API
-const findRoute = async (wp_1, wp_2) => {
+const findRoute = async () => {
   try {
     var home_location = "home";
     var work_location = "work";
@@ -94,13 +94,18 @@ const findRoute = async (wp_1, wp_2) => {
   }
 };
 
-const findSpots = async (coords) => {
+const findSpots = async () => {
   try {
     // Get the Inrix API token using the middleware
     console.log("Finding Parking Spots...");
     const apiKey = await getToken();
+    var work_location = "work";
+
+    const other_location = "other";
+    const wp_1 = await getLatLong(other_location);
+    var waypoint1 = `${wp_1[0]}|${wp_1[1]}`;
     // Format coordinates properly by replacing '|' with ','
-    const formattedCoords = coords.replace("|", "%7C");
+    const formattedCoords = waypoint1.replace("|", "%7C");
     // Set up URL to query for finding a route
     const routeUrl = `https://api.iq.inrix.com/blocks/v3?point=${formattedCoords}&radius=100&format=json`;
     console.log("routeURL: ", routeUrl);
@@ -126,4 +131,4 @@ const findSpots = async (coords) => {
     throw new Error("Failed to find parking spots using Inrix API");
   }
 };
-export { findRoute, getMidpoint, findSpots };
+export { findRoute, getMidpoint, findSpots, getLatLong };
