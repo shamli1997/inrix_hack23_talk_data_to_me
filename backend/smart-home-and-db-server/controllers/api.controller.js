@@ -186,10 +186,10 @@ const callRouting = async (req, res) => {
                 var time = response.data.time;
                 console.log('time',time);
             }
-            setInterval(function () {
+            setTimeout(function () {
                 setHeaterOn();
             }, time*1000);
-            setInterval(function () {
+            setTimeout(function () {
                 setLightOn();
             }, (time+2)*1000);
             res.send({
