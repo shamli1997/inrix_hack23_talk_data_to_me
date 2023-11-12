@@ -1,12 +1,13 @@
 import express from "express";
 
 import {
+    test,
     apiNewDeveloper,
     registerApp,
     getLights,
     getLight,
     putLight,
-    adjustLight, test
+    adjustLight
 } from "../controllers/api.controller.js";
 
 const router = express.Router();

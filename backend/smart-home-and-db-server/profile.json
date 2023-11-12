@@ -1,0 +1,11 @@
+{
+    "firstname": "fn",
+    "lastname": "ln",
+    "email": "email",
+    "home": "800 W Renner Road",
+    "homezip": 75080,
+    "work": "1302 The Alameda",
+    "workzip": 95126,
+    "other": "100 Day St",
+    "otherzip": 94131
+}
