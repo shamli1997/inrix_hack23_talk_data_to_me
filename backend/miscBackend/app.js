@@ -13,6 +13,7 @@ var app = express();
 app.use(cors()); /* NEW */
 
 
+console.log("started server")
 app.get('/', function (req, res) {
     res.send("This is the suggest backend");
 });
@@ -24,9 +25,6 @@ app.get('/calendar', function (req, res) {
   axios.get(url+API_KEY).then(data => {
     var retStr = "";
     data.data.items.forEach(ele => {
-      console.log(ele["start"])
-      console.log(ele["end"])
-
     options = {
       weekday: 'long',hour:"numeric",minute:"numeric"
     };
@@ -47,16 +45,12 @@ app.get('/calendar', function (req, res) {
   })
 })
 
-app.get('/food', function (req, res) {
+app.get('/food', async function (req, res) {
+  axios.get("http://localhost:4001/location/midpoint").then((data) => {
   client.search({
     term: 'boba',
-    latitude: '37.349055586417926',
-    longitude: '-121.93956957656205',
-    /*
-    term: req.query.term,
-    latitude: req.query.latitude,
-    longitude: req.query.longitude,
-    */
+    latitude: data["data"][0],
+    longitude: data["data"][1],
     sort_by: 'best_match',
     limit: '4',
     radius: '3000'
@@ -82,6 +76,7 @@ app.get('/food', function (req, res) {
   }).catch(e => {
     res.send("Error");
   });
-})
+
+})})
 
 app.listen(3001);
