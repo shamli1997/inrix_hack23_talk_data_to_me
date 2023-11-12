@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {useState} from "react";
 import apiRequest from "../components/apiRequest";
@@ -8,6 +8,11 @@ const keyword_extractor = require("keyword-extractor");
 
 function Home() {
     const [voiceState,setVoiceState] = useState(0);
+    const [transcriptList,setTranscriptList] = useState('{"msg":[]}')
+
+    useEffect(()=>{
+        console.log(transcriptList)
+    },[transcriptList])
 
     const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
     const startListening = () => {
@@ -16,7 +21,12 @@ function Home() {
     };
     const stopListening = () => {
         SpeechRecognition.stopListening();
-        extractKeyword(transcript)
+        if(transcript.length > 0){
+            var transcriptObj = JSON.parse(transcriptList)
+            transcriptObj["msg"].push({transcript:transcript,user:true})
+            setTranscriptList(JSON.stringify(transcriptObj))
+            extractKeyword(transcript)
+        }
     };
     const resetListening = () => {
         SpeechRecognition.stopListening();
@@ -30,9 +40,22 @@ function Home() {
       <div>
           <div className="container">
               <h2 className="page-title">Talk Data to Me</h2>
-                <div clasName="mainContentContainer">
+                <div className="mainContentContainer">
                     <div className="main-content">
-                        {transcript}
+                        <div className="oldText">
+                            {JSON.parse(transcriptList)["msg"].map((v,i)=>{
+                                return <div className={(v["user"] === true ? "userMsgTranscript" : "botMsgTranscript")}
+                                    key={i}>
+                                    {v["transcript"]}
+                                </div>
+                            })}
+                            {
+                                voiceState === 0 ? <div/> :
+                                <div className="currentTranscript">
+                                    {transcript+" ..."}
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
 
@@ -57,7 +80,7 @@ function Home() {
 };
 
 function extractKeyword(transcript){
-    transcript = "what is my schedule"
+    transcript = "find me boba stores"
     transcript = transcript.toLowerCase();
     var opt = -1
 
@@ -92,18 +115,21 @@ function extractKeyword(transcript){
     queryTTS(opt,extraction_result)
 }
 
-function queryTTS(opt,parameters){
+function queryTTS(opt){
     const speech = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     speech.voice = voices[1]
     speech.lang = "en-US"
     speech.rate = 1
+    var retStr = ""
 
     const queryVoice = function(text){
+        retStr += text
         speech.text = text
         window.speechSynthesis.speak(speech); 
     }
     console.log("ok")
+
 
     //prequery
     if(opt === -1){
@@ -133,5 +159,7 @@ function queryTTS(opt,parameters){
         //insert command to run for turning on appliances
         queryVoice("I have finished.")
     }
+    console.log(retStr)
+    return retStr;
 }
 export default Home;

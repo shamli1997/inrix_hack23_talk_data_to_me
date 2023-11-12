@@ -35,3 +35,17 @@
 .nav-text a{
     background-color: var(--buttonColors);
 }
+
+.botMsgTranscript, .userMsgTranscript{
+    width: fit-content;
+    max-width: 80%;
+    border-radius: 4px;
+    margin-bottom: 3px;
+    padding: 1px 8px;
+}
+.userMsgTranscript{
+    background-color: greenyellow;
+}
+.botMsgTranscript{
+    background-color: aqua;
+}
