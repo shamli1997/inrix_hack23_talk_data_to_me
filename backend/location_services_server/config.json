@@ -1,0 +1,11 @@
+{
+    "http": "http://",
+    "api": "/api/",
+    "bridgeip": "172.16.3.3",
+    "devicetype": "my_hue_app#inchara",
+    "username": "MEf-L7KqO8-9KMt0H7Q2jWLNxc6n5NUjFesUkf9P",
+    "inrixServerHost": "localhost:",
+    "inrixServerPort": 4001,
+    "inrixRoutingApi": "/location/findtime"
+
+}
