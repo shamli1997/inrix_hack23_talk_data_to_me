@@ -1,4 +1,12 @@
+:root{
+    --buttonColors: blueviolet;
+}
 .btn-style{
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    bottom: 20px;
+    width: 100%;
     justify-content: center;
 }
 .btn-style > button{
@@ -6,7 +14,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: blueviolet;
+    background-color: var(--buttonColors);
     filter: drop-shadow(2px 4px 6px black);
     margin: 3px;
 }
@@ -17,15 +25,13 @@
 .mainContentContainer{
 
 }
-.navbar{
-    position: fixed;
-    left: 2%;
-    top: 2%;
-}
 .nav-menu active{
     position: fixed;
     z-index: 2;
 }
 .menu-bars{
     margin-left: 0px;
+}
+.nav-text a{
+    background-color: var(--buttonColors);
 }
