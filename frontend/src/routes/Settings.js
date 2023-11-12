@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { TextField, Button, Container, Stack } from '@mui/material';
 import { Link } from "react-router-dom"
+import apiRequest from "../components/apiRequest";
 
 function Settings() {
   const [firstName, setFirstName] = useState('')
@@ -22,7 +23,7 @@ function Settings() {
     
       <>
           <div className="container">
-              <h2 class="page-title">Profile</h2>
+              <h2 className="page-title">Profile</h2>
               <br/>
               <br/>
              
@@ -141,7 +142,25 @@ function Settings() {
                 </Stack>
 
                 
-                <Button variant="outlined" color="secondary" type="submit">Save</Button>
+                <Button variant="outlined" color="secondary" type="submit"
+                    onClick={()=>{
+                        apiRequest("http://localhost:8080/profile","",
+                            {
+                                firstname: firstName,
+                                lastname: lastName,
+                                email: email,
+                                home: homeAddress,
+                                homezip: homeAddressZip,
+                                work: workAddress,
+                                workzip: workAddressZip,
+                                other: otherAddress,
+                                otherzip: otherAddressZip
+                            }
+                        ,"PUT")
+                    }}
+                >
+                    Save
+                </Button>
             </form>
             
      
