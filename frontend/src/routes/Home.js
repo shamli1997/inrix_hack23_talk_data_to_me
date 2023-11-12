@@ -12,7 +12,7 @@ function Home() {
     const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
     const startListening = () => {
         resetTranscript();
-        SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
+        SpeechRecognition.startListening({ continuous: true, language: 'en-US' })
     };
     const stopListening = () => {
         SpeechRecognition.stopListening();
@@ -38,8 +38,11 @@ function Home() {
 
                 <div className="btn-style">
                     <button onClick={()=>{
+             
+
                         if(voiceState === 0) startListening()
                         else stopListening()
+
                         setVoiceState(voiceState ^ 1)
                     }}>
                         {voiceState === 0?"Start Listening":"Stop Listening" }

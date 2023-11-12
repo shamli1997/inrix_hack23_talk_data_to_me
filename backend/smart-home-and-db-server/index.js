@@ -1,12 +1,8 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
-import axios from "axios";
-
-import connectDB from "./mongodb/connect.js";
-import userRouter from "./routes/user.routes.js";
-import propertyRouter from "./routes/property.routes.js";
 import apiRouter from "./routes/api.routes.js";
+import profileRouter from "./routes/profile.routes.js";
 
 dotenv.config();
 
@@ -20,12 +16,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", apiRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/properties", propertyRouter);
+app.use("/profile", profileRouter);
 
 const startServer = async () => {
     try {
-        connectDB(process.env.MONGODB_URL);
 
         app.listen(8080, () =>
             console.log("Server started on port http://localhost:8080"),
