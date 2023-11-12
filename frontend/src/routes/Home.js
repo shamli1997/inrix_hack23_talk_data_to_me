@@ -80,7 +80,7 @@ function Home() {
 };
 
 function extractKeyword(transcript){
-    transcript = "find me boba stores"
+    transcript = "parking spots please"
     transcript = transcript.toLowerCase();
     var opt = -1
 
@@ -89,6 +89,8 @@ function extractKeyword(transcript){
         {raw:["schedule"],high:[],low:[]},
         {raw:["take me home"],high:["home","work"],low:["take","get"]},
         {raw:["precondition the house","make the house"],high:["lights","heat"],low:["turn"]},
+        {raw:["bad day","rough day"],high:["movies","shows"],low:["watch"]},
+        {raw:["parking spots"],high:["grocery"],low:["car"]},
     ]
     for(let i = 0; i < keyWords.length; i++){
         keyWords[i]["raw"].forEach(phrase => {
@@ -137,27 +139,43 @@ function queryTTS(opt){
     }
     else if(opt === 0){
         queryVoice("I am finding stores for you to eat at.")
-        apiRequest("http://localhost:3001/food").then((data)=>{
+        apiRequest("http://localhost:8082/food").then((data)=>{
             console.log(data)
             queryVoice((data["code"] !== 0 ? "Here are the places I found. ":"")+data["msg"])
         })
     }
     else if(opt === 1){
         queryVoice("I will repeat your schedule")
-        apiRequest("http://localhost:3001/calendar").then((data)=>{
+        apiRequest("http://localhost:8082/calendar").then((data)=>{
             console.log(data)
             queryVoice((data["code"] !== 0 ? "Here is the result.":"")+data["msg"])
         })
     } 
     else if(opt === 2){
         queryVoice("I am calculating your route home")
-        //insert function to turn on routing. get routing and update the result string.
-        queryVoice("Here is the result.")
+        apiRequest("http://localhost:3081/location/findtime").then((data)=>{
+            queryVoice("Here is the result.")
+            console.log(data)
+            queryVoice(data["msg"])
+        })
     }
     else if(opt === 3){
         queryVoice("I will turn on appliances when you are about to get home.")
-        //insert command to run for turning on appliances
-        queryVoice("I have finished.")
+        apiRequest("http://localhost:8080/api/callrouting").then((data)=>{
+            queryVoice("I have finished.")
+        })
+    }
+    else if(opt === 4){
+        queryVoice("Here are some movies to cheer you up")
+        apiRequest("http://localhost:8080/api/tv").then((data)=>{
+            queryVoice(data["msg"])
+        })
+    }
+    else if(opt === 5){
+        queryVoice("Here are some parking spots.")
+        apiRequest("http://localhost:4001/location/findparkingspots").then((data)=>{
+            queryVoice(data["msg"])
+        })
     }
     console.log(retStr)
     return retStr;

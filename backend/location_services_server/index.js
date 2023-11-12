@@ -1,8 +1,10 @@
 import express from "express";
+import cors from "cors"
 
 import locationRouter from "./routes/location.routes.js";
 
 const app = express();
+app.use(cors());
 const port = 4001;
 app.set("json spaces", 2);
 

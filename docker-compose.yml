@@ -1,0 +1,16 @@
+version: "3"
+services:
+    backend_location:
+        build: ./backend/location_services_server/.
+        ports:
+            - "4001:4001"
+    backend_misc:
+        build: ./backend/miscBackend/.
+        ports:
+            - "3001:3001"
+    backend_smart-home:
+        build: ./backend/smart-home-and-db-server/.
+        ports:
+            - "8080:8080"
+    
+
