@@ -183,6 +183,10 @@ const callRouting = async (req, res) => {
             url: url
         })
         .then(function (response) {
+            if (response.data.code != 0){
+                var time = response.data.time;
+                console.log(time);
+            }
             res.send(JSON.stringify(response.data));
         })
         .catch(function (error) {
