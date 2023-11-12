@@ -48,7 +48,7 @@ Talk Data to Me is a voice assistant system designed to enhance your daily commu
 
 1. `cd miscBackend`
 2. `npm install`
-3. `npm test`
+3. `node app.js`
 
 ### Set up Smart Home server
 

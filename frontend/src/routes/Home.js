@@ -99,9 +99,9 @@ function extractKeyword(transcript,setTranscriptCallDown){
         {raw:["take me home"],high:["home","work"],low:["take","get"]},
         {raw:["precondition","make the house"],high:["lights","heat"],low:["turn"]},
         {raw:["bad day","rough day"],high:["movies","shows"],low:["watch"]},
-        {raw:["parking spots"],high:["grocery"],low:["car"]},
-        {raw:["clap clap","turn off"],high:[""],low:["car"]},
-        {raw:[""],high:[""],low:["thanks"]},
+        {raw:["parking spots", "parking"],high:["grocery"],low:["car"]},
+        {raw:["clap clap","turn off"],high:[""],low:["car"]}
+        // ,{raw:[""],high:[""],low:["thanks"]},
     ]
     for(let i = 0; i < keyWords.length; i++){
         keyWords[i]["raw"].forEach(phrase => {
@@ -169,7 +169,7 @@ function queryTTS(opt,setTranscriptCallDown){
         })
     }
     else if(opt === 4){
-        queryVoice("Here are some movies to cheer you up")
+        queryVoice("I am sorry to hear that.")
         apiRequest("http://localhost:8080/api/tv").then((data)=>{
             queryVoice(data["msg"])
         })

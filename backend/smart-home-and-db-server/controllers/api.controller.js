@@ -168,7 +168,7 @@ const getRecommendation = async (req, res) => {
           console.log(res.data)
         res.send({ 
             code: 1,
-            msg: 'I am sorry to hear that. How about taking some time for yourself to relax? Maybe watching a good TV show could help take your mind off things. If you are up for it, here are a few recommendations:' + res.data.join(',') 
+            msg: 'How about taking some time for yourself to relax? Maybe watching a good TV show could help take your mind off things. If you are up for it, here are a few recommendations:' + res.data.join(',') 
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
