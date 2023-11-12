@@ -48,6 +48,7 @@ app.get('/food', function (req, res) {
     limit: '4',
     radius: '3000'
   }).then(response => {
+    var retStr = ""
     if(response.jsonBody.total > 0){
       //res.send(JSON.stringify(response.jsonBody));
       response.jsonBody.businesses.forEach(ele => {

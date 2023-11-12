@@ -10,10 +10,6 @@ function Home() {
     const [voiceState,setVoiceState] = useState(0);
     const [transcriptList,setTranscriptList] = useState('{"msg":[]}')
 
-    useEffect(()=>{
-        console.log(transcriptList)
-    },[transcriptList])
-
     const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
     const startListening = () => {
         resetTranscript();
@@ -91,6 +87,7 @@ function extractKeyword(transcript){
         {raw:["precondition the house","make the house"],high:["lights","heat"],low:["turn"]},
         {raw:["bad day","rough day"],high:["movies","shows"],low:["watch"]},
         {raw:["parking spots"],high:["grocery"],low:["car"]},
+        {raw:["clap clap","turn off"],high:[""],low:["car"]},
     ]
     for(let i = 0; i < keyWords.length; i++){
         keyWords[i]["raw"].forEach(phrase => {
@@ -103,7 +100,6 @@ function extractKeyword(transcript){
         return_changed_case:true,
         remove_duplicates: false
     });
-    console.log(extraction_result)
 
     for(let certainty of ["high","low"]){
         if(opt !== -1) break;
@@ -130,8 +126,6 @@ function queryTTS(opt){
         speech.text = text
         window.speechSynthesis.speak(speech); 
     }
-    console.log("ok")
-
 
     //prequery
     if(opt === -1){
@@ -140,14 +134,12 @@ function queryTTS(opt){
     else if(opt === 0){
         queryVoice("I am finding stores for you to eat at.")
         apiRequest("http://localhost:8082/food").then((data)=>{
-            console.log(data)
             queryVoice((data["code"] !== 0 ? "Here are the places I found. ":"")+data["msg"])
         })
     }
     else if(opt === 1){
         queryVoice("I will repeat your schedule")
         apiRequest("http://localhost:8082/calendar").then((data)=>{
-            console.log(data)
             queryVoice((data["code"] !== 0 ? "Here is the result.":"")+data["msg"])
         })
     } 
@@ -155,7 +147,6 @@ function queryTTS(opt){
         queryVoice("I am calculating your route home")
         apiRequest("http://localhost:3081/location/findtime").then((data)=>{
             queryVoice("Here is the result.")
-            console.log(data)
             queryVoice(data["msg"])
         })
     }
@@ -177,7 +168,12 @@ function queryTTS(opt){
             queryVoice(data["msg"])
         })
     }
-    console.log(retStr)
+    else if(opt === 6){
+        queryVoice("Here are some parking spots.")
+        apiRequest("http://localhost:4001/location/findparkingspots").then((data)=>{
+            queryVoice(data["msg"])
+        })
+    }
     return retStr;
 }
 export default Home;
