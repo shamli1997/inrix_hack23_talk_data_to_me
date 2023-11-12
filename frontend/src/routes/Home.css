@@ -56,3 +56,11 @@
 .botMsgTranscript{
     background-color: aqua;
 }
+.currentTranscript{
+    display: flex;
+    justify-content: center;
+}
+old-text{
+    height: 100%;
+    overflow-y: scroll;
+}
