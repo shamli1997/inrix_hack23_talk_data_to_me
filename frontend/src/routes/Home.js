@@ -3,24 +3,23 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import useClipboard from "react-use-clipboard";
 import {useState} from "react";
 
-function Home() {
-  const [textToCopy, setTextToCopy] = useState();
-  const [isCopied, setCopied] = useClipboard(textToCopy, {
-      successDuration:1000
-  });
+const keyword_extractor = require("keyword-extractor");
 
-  const startListening = () => SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
-  const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
-  const handleReset = () => {
-    stopHandle();
-    resetTranscript();
-  };
-  const stopHandle = () => {
-    SpeechRecognition.stopListening();
-  };
-  if (!browserSupportsSpeechRecognition) {
-      return null
-  }
+function Home() {
+    const [voiceState,setVoiceState] = useState(0);
+
+    const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
+    const startListening = () => {
+        resetTranscript();
+        SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
+    };
+    const stopListening = () => {
+        SpeechRecognition.stopListening();
+        extractKeyword(transcript)
+    };
+    if (!browserSupportsSpeechRecognition) {
+        return null
+    }
 
   return (
       <>
@@ -31,25 +30,39 @@ function Home() {
               {/* <p>A React hook that converts speech from the microphone to text and makes it available to your React
                   components.</p> */}
 
-              <div className="main-content" onClick={() =>  setTextToCopy(transcript)}>
-                  {transcript}
-              </div>
+                <div className="main-content">
+                    {transcript}
+                </div>
 
-              <div className="btn-style">
+                <div className="btn-style">
+                    <button onClick={()=>{
+                        if(voiceState === 0){
+                            startListening()
+                        } else{
+                            stopListening()
+                        }
+                        setVoiceState(voiceState ^ 1)
+                    }}>
+                        {voiceState === 0?"Start Listening":"Stop Listening" }
+                    </button>
+                </div>
 
-                  {/* <button onClick={setCopied}>
-                      {isCopied ? 'Copied!' : 'Copy to clipboard'}
-                  </button> */}
-                  <button onClick={handleReset}>Reset</button>
-                  <button onClick={startListening}>Start Listening</button>
-                  <button onClick={SpeechRecognition.stopListening}>Stop Listening</button>
+            </div>
 
-              </div>
-
-          </div>
-
-      </>
-  );
+        </>
+    );
 };
+
+function extractKeyword(transcript){
+    transcript = "hello there i am trying to find a place to eat. Where is the nearest boba shot"
+    console.log(transcript)
+    const extraction_result = keyword_extractor.extract(transcript,{
+        language:"english",
+        remove_digits: true,
+        return_changed_case:true,
+        remove_duplicates: false
+    });
+    console.log(extraction_result)
+}
 
 export default Home;
