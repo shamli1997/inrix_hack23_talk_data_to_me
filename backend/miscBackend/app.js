@@ -6,8 +6,11 @@ const {google} = require('googleapis');
 var express = require('express');
 const axios = require("axios");
 const router = express.Router();
+const cors = require('cors');
+
 
 var app = express();
+app.use(cors()); /* NEW */
 
 
 app.get('/', function (req, res) {
@@ -46,7 +49,6 @@ app.get('/food', function (req, res) {
     radius: '3000'
   }).then(response => {
     if(response.jsonBody.total > 0){
-      var retStr = "There are "+ response.jsonBody.total + " " + req.query.term + " businesses. Here are the best four. "
       //res.send(JSON.stringify(response.jsonBody));
       response.jsonBody.businesses.forEach(ele => {
         retStr += ele.name + " is around " + Math.floor(ele.distance) + " meters away. " 

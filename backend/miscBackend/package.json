@@ -2,6 +2,7 @@
   "dependencies": {
     "@googleapis/docs": "^3.0.0",
     "axios": "^1.6.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "googleapis": "^128.0.0",
     "yelp-fusion": "^3.0.0"
