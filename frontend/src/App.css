@@ -27,7 +27,6 @@
 }
 
 .menu-bars {
-  margin-left: 2rem;
   font-size: 2rem;
   background: none;
   color: #fff;
@@ -42,6 +41,7 @@
   top: 0;
   left: -100%;
   transition: 850ms;
+  z-index: 2;
 }
 
 .nav-menu.active {

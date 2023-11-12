@@ -14,3 +14,18 @@
     filter: drop-shadow(2px 4px 16px black);
 
 }
+.mainContentContainer{
+
+}
+.navbar{
+    position: fixed;
+    left: 2%;
+    top: 2%;
+}
+.nav-menu active{
+    position: fixed;
+    z-index: 2;
+}
+.menu-bars{
+    margin-left: 0px;
+}
