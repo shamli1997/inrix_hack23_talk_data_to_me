@@ -25,7 +25,7 @@ function Home() {
   return (
       <>
           <div className="container">
-              <h2>Title</h2>
+              <h2 class="page-title">Talk Data to Me</h2>
               <br/>
               <br/>
               {/* <p>A React hook that converts speech from the microphone to text and makes it available to your React

@@ -19,7 +19,7 @@ function Settings() {
     
       <>
           <div className="container">
-              <h2>Profile</h2>
+              <h2 class="page-title">Profile</h2>
               <br/>
               <br/>
              
