@@ -2,6 +2,7 @@ import React from "react";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import useClipboard from "react-use-clipboard";
 import {useState} from "react";
+import "./Home.css"
 
 const keyword_extractor = require("keyword-extractor");
 
@@ -17,19 +18,20 @@ function Home() {
         SpeechRecognition.stopListening();
         extractKeyword(transcript)
     };
+    const resetListening = () => {
+        SpeechRecognition.stopListening();
+        resetTranscript();
+    }
     if (!browserSupportsSpeechRecognition) {
         return null
     }
 
   return (
-      <>
+      <div>
           <div className="container">
-              <h2 class="page-title">Talk Data to Me</h2>
+              <h2 className="page-title">Talk Data to Me</h2>
               <br/>
               <br/>
-              {/* <p>A React hook that converts speech from the microphone to text and makes it available to your React
-                  components.</p> */}
-
                 <div className="main-content">
                     {transcript}
                 </div>
@@ -45,16 +47,31 @@ function Home() {
                     }}>
                         {voiceState === 0?"Start Listening":"Stop Listening" }
                     </button>
+                    {
+                        voiceState == 0 ? <div/>:
+                        <button onClick={()=>{resetListening()}}>Reset</button>
+                    }
                 </div>
 
             </div>
-
-        </>
+        </div>
     );
 };
 
 function extractKeyword(transcript){
+    transcript = transcript.toLowerCase();
     transcript = "hello there i am trying to find a place to eat. Where is the nearest boba shot"
+
+    var opt = -1
+    const keyWords = [
+        ["find","where"],
+        ["take","home","work"],
+        ["turn"]
+    ]
+    for(let i = 0; i < keyWords.length; i++){
+        
+    }
+
     console.log(transcript)
     const extraction_result = keyword_extractor.extract(transcript,{
         language:"english",
@@ -64,5 +81,8 @@ function extractKeyword(transcript){
     });
     console.log(extraction_result)
 }
+/*
+
+*/
 
 export default Home;
