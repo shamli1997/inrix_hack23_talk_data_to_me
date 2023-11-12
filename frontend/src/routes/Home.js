@@ -38,8 +38,6 @@ function Home() {
 
                 <div className="btn-style">
                     <button onClick={()=>{
-             
-
                         if(voiceState === 0) startListening()
                         else stopListening()
 
@@ -49,7 +47,7 @@ function Home() {
                     </button>
                     {
                         voiceState === 0 ? <div/>:
-                        <button onClick={()=>{resetListening()}}>Reset</button>
+                        <button onClick={()=>{resetListening(); setVoiceState(0)}}>Reset</button>
                     }
                 </div>
 
