@@ -43,6 +43,13 @@
     margin-bottom: 3px;
     padding: 1px 8px;
 }
+.userMsgTranscriptCont,.botMsgTranscriptCont{
+    width: 100%;
+    display: flex;
+}
+.botMsgTranscriptCont{
+    justify-content: flex-end;
+}
 .userMsgTranscript{
     background-color: greenyellow;
 }

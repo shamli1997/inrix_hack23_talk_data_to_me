@@ -24,7 +24,20 @@ app.get('/calendar', function (req, res) {
   axios.get(url+API_KEY).then(data => {
     var retStr = "";
     data.data.items.forEach(ele => {
-      retStr += "You said "+ele.summary + (ele.location !== undefined? " at "+ ele.location:"") + "."
+      console.log(ele["start"])
+      console.log(ele["end"])
+
+    options = {
+      weekday: 'long',hour:"numeric",minute:"numeric"
+    };
+      var startTime = (ele["start"]["dateTime"] === undefined ? ele["start"]["date"]:ele["start"]["dateTime"])
+      startTime = new Date(startTime).toLocaleString('en-US', options)
+
+      var endTime = (ele["end"]["dateTime"] === undefined ? ele["end"]["date"]:ele["end"]["dateTime"])
+      endTime = new Date(endTime).toLocaleString('en-US', options)
+
+
+      retStr += "You said "+ele.summary + " from " + startTime + " to " + endTime +"."
     });
     //console.log(data.data.items)
     res.send(JSON.stringify({

@@ -80,7 +80,7 @@ function Settings() {
                     sx={{mb: 4}}
                 />
                 <Stack spacing="2px" style={{marginBottom:"10px"}}>
-                <Stack spacing="7px" direction="row">
+                <Stack spacing="7px" direction="row" style={{marginBottom:"4px"}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -97,14 +97,14 @@ function Settings() {
                         color='secondary'
                         label="Home Zip"
                         onChange={e => {
-                            if(/^\d+$/.test(e.target.value) && e.target.value.length <= 5) setHomeAddressZip(e.target.value)
+                            if(/^\d*$/.test(e.target.value) && e.target.value.length <= 5) setHomeAddressZip(e.target.value)
                         }}
                         value={homeAddressZip}
                         fullWidth
                         required sx={{mb: 4}}
                     />
                 </Stack>
-                <Stack spacing="7px" direction="row">
+                <Stack spacing="7px" direction="row" style={{marginBottom:"4px"}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -121,7 +121,7 @@ function Settings() {
                         color='secondary'
                         label="Work Zip"
                         onChange={e => {
-                            if(/^\d+$/.test(e.target.value) && e.target.value.length <= 5) setWorkAddressZip(e.target.value)
+                            if(/^\d*$/.test(e.target.value) && e.target.value.length <= 5) setWorkAddressZip(e.target.value)
                         }}
                         value={workAddressZip}
                         fullWidth
@@ -129,7 +129,7 @@ function Settings() {
                     />
                 </Stack>
 
-                <Stack spacing="7px" direction="row">
+                <Stack spacing="7px" direction="row" style={{marginBottom:"4px"}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -146,7 +146,7 @@ function Settings() {
                         color='secondary'
                         label="Other Zip"
                         onChange={e => {
-                            if(/^\d+$/.test(e.target.value) && e.target.value.length <= 5) setOtherAddressZip(e.target.value)
+                            if(/^\d*$/.test(e.target.value) && e.target.value.length <= 5) setOtherAddressZip(e.target.value)
                         }}
                         value={otherAddressZip}
                         fullWidth

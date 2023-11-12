@@ -3,12 +3,21 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import {useState} from "react";
 import apiRequest from "../components/apiRequest";
 import "./Home.css"
+import config from "../imgs/config.json"
 
 const keyword_extractor = require("keyword-extractor");
 
 function Home() {
     const [voiceState,setVoiceState] = useState(0);
     const [transcriptList,setTranscriptList] = useState('{"msg":[]}')
+    const [transcriptCallDown,setTranscriptCallDown] = useState("")
+
+    useEffect(()=>{
+        console.log(transcriptCallDown)
+        var transcriptObj = JSON.parse(transcriptList)
+        transcriptObj["msg"].push({transcript:transcriptCallDown,user:false})
+        setTranscriptList(JSON.stringify(transcriptObj))
+    },[transcriptCallDown])
 
     const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
     const startListening = () => {
@@ -21,7 +30,7 @@ function Home() {
             var transcriptObj = JSON.parse(transcriptList)
             transcriptObj["msg"].push({transcript:transcript,user:true})
             setTranscriptList(JSON.stringify(transcriptObj))
-            extractKeyword(transcript)
+            extractKeyword(transcript, setTranscriptCallDown)
         }
     };
     const resetListening = () => {
@@ -40,10 +49,14 @@ function Home() {
                     <div className="main-content">
                         <div className="oldText">
                             {JSON.parse(transcriptList)["msg"].map((v,i)=>{
-                                return <div className={(v["user"] === true ? "userMsgTranscript" : "botMsgTranscript")}
+                                return (
+                                <div className={(v["user"] === true ? "userMsgTranscriptCont" : "botMsgTranscriptCont")}
                                     key={i}>
-                                    {v["transcript"]}
+                                    <div className={(v["user"] === true ? "userMsgTranscript" : "botMsgTranscript")}>
+                                        {v["transcript"]}
+                                    </div>
                                 </div>
+                                )
                             })}
                             {
                                 voiceState === 0 ? <div/> :
@@ -75,19 +88,20 @@ function Home() {
     );
 };
 
-function extractKeyword(transcript){
-    transcript = "parking spots please"
+function extractKeyword(transcript,setTranscriptCallDown){
+    //transcript = "parking spots please"
     transcript = transcript.toLowerCase();
     var opt = -1
 
     const keyWords = [
-        {raw:["find me boba stores","bad day","rough day"],high:["store","shop","restaurant","hungry"],low:["find","where"]},
-        {raw:["schedule"],high:[],low:[]},
+        {raw:["find me boba stores","bad day","rough day","hungry"],high:["store","shop","restaurant","hungry"],low:["find","where"]},
+        {raw:["schedule","calendar"],high:[],low:[]},
         {raw:["take me home"],high:["home","work"],low:["take","get"]},
-        {raw:["precondition the house","make the house"],high:["lights","heat"],low:["turn"]},
+        {raw:["precondition","make the house"],high:["lights","heat"],low:["turn"]},
         {raw:["bad day","rough day"],high:["movies","shows"],low:["watch"]},
         {raw:["parking spots"],high:["grocery"],low:["car"]},
         {raw:["clap clap","turn off"],high:[""],low:["car"]},
+        {raw:[""],high:[""],low:["thanks"]},
     ]
     for(let i = 0; i < keyWords.length; i++){
         keyWords[i]["raw"].forEach(phrase => {
@@ -110,19 +124,18 @@ function extractKeyword(transcript){
             if(opt !== -1) break;
         }
     } 
-    queryTTS(opt,extraction_result)
+    queryTTS(opt,setTranscriptCallDown)
 }
 
-function queryTTS(opt){
+function queryTTS(opt,setTranscriptCallDown){
     const speech = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     speech.voice = voices[1]
     speech.lang = "en-US"
     speech.rate = 1
-    var retStr = ""
 
     const queryVoice = function(text){
-        retStr += text
+        setTranscriptCallDown(text)
         speech.text = text
         window.speechSynthesis.speak(speech); 
     }
@@ -133,20 +146,19 @@ function queryTTS(opt){
     }
     else if(opt === 0){
         queryVoice("I am finding stores for you to eat at.")
-        apiRequest("http://localhost:8082/food").then((data)=>{
+        apiRequest("http://localhost:3001/food").then((data)=>{
             queryVoice((data["code"] !== 0 ? "Here are the places I found. ":"")+data["msg"])
         })
     }
     else if(opt === 1){
         queryVoice("I will repeat your schedule")
-        apiRequest("http://localhost:8082/calendar").then((data)=>{
+        apiRequest("http://localhost:3001/calendar").then((data)=>{
             queryVoice((data["code"] !== 0 ? "Here is the result.":"")+data["msg"])
         })
     } 
     else if(opt === 2){
         queryVoice("I am calculating your route home")
-        apiRequest("http://localhost:3081/location/findtime").then((data)=>{
-            queryVoice("Here is the result.")
+        apiRequest("http://localhost:4001/location/findtime").then((data)=>{
             queryVoice(data["msg"])
         })
     }
@@ -169,11 +181,22 @@ function queryTTS(opt){
         })
     }
     else if(opt === 6){
-        queryVoice("Here are some parking spots.")
-        apiRequest("http://localhost:4001/location/findparkingspots").then((data)=>{
-            queryVoice(data["msg"])
+        queryVoice("I am shutting down your lights and heaters.")
+        apiRequest("http://localhost:8080/api/lights/1/off","",{
+            on: false
+        },"PUT").then((data)=>{
+            queryVoice("Turned off light 1")
+            apiRequest("http://localhost:8080/api/lights/2/off","",{
+                on: false
+            },"PUT").then((data)=>{
+                queryVoice("Turned off light 2")
+            })
         })
     }
-    return retStr;
+    else if(opt === 7){
+        queryVoice("No problem")
+    }
 }
 export default Home;
+
+//https://172.16.3.3/api/MEf-L7KqO8-9KMt0H7Q2jWLNxc6n5NUjFesUkf9P/lights/2/state
