@@ -79,8 +79,7 @@ function Settings() {
                     required
                     sx={{mb: 4}}
                 />
-                <Stack spacing="2px" style={{marginBottom:"10px"}}>
-                <Stack spacing="7px" direction="row" style={{marginBottom:"4px"}}>
+                <Stack spacing="7px" direction="row" sx={{marginBottom: 4}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -104,7 +103,7 @@ function Settings() {
                         required sx={{mb: 4}}
                     />
                 </Stack>
-                <Stack spacing="7px" direction="row" style={{marginBottom:"4px"}}>
+                <Stack spacing="7px" direction="row"  sx={{marginBottom: 4}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -129,7 +128,7 @@ function Settings() {
                     />
                 </Stack>
 
-                <Stack spacing="7px" direction="row" style={{marginBottom:"4px"}}>
+                <Stack spacing="7px" direction="row"  sx={{marginBottom: 4}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -153,7 +152,7 @@ function Settings() {
                         sx={{mb: 4}}
                     />
                 </Stack>
-                </Stack>
+                
 
                 
                 <Button variant="outlined" color="secondary" type="submit"
