@@ -7,6 +7,6 @@
     "inrixServerHost": "localhost:",
     "inrixServerPort": 4001,
     "inrixRoutingApi": "/location/findtime",
-    "heaterOn": "http://localhost:8080/api/lights/on/100/100/100",
-    "lightOn": "http://localhost:8080/api/lights/on/255/255/255"
+    "heaterOn": "http://localhost:8080/api/lights/1/100/100/100",
+    "lightOn": "http://localhost:8080/api/lights/2/255/255/255"
 }

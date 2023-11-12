@@ -196,7 +196,44 @@ const callRouting = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+/*
+const setHeaterOn = async (req, res) => {
+    try {
+        var url = properties.heaterOn;
+        axios({
+            method:'put',
+            url: url
+        })
+        .then(function (response) {
+            res.send(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
+const setLightOn = async (req, res) => {
+    try {
+        var url = properties.lightOn;
+        axios({
+            method:'put',
+            url: url
+        })
+        .then(function (response) {
+            res.send(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+*/
 callRouting();
+
 
 export { test, apiNewDeveloper, registerApp, getLight, getLights, putLight, adjustLight, getRecommendation };
