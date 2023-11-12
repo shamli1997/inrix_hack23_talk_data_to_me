@@ -4,6 +4,8 @@ const client = yelp.client('i-Jz2Duc7NSGGdND-OvCrbknVyyI94BgpfGA2TGBVOAGRkT_9atR
 const {google} = require('googleapis');
 
 var express = require('express');
+const axios = require("axios");
+const router = express.Router();
 
 var app = express();
 
@@ -12,7 +14,21 @@ app.get('/', function (req, res) {
     res.send("This is the suggest backend");
 });
 app.get('/calendar', function (req, res) {
-    
+  const API_KEY = 'AIzaSyCpsWS3t-EpUBU3WPPA9494WdwzT6FG3i8';
+  const url = 'https://www.googleapis.com/calendar/v3/calendars/c_df2bf29d0852cced3a6745a36aacfebab2b2ed91fcab71cea1aa6c3279981590@group.calendar.google.com/events?key=';
+
+
+  axios.get(url+API_KEY).then(data => {
+    var retStr = "";
+    data.data.items.forEach(ele => {
+      retStr += "You said "+ele.summary + (ele.location !== undefined? " at "+ ele.location:"") + "."
+    });
+    //console.log(data.data.items)
+    res.send(JSON.stringify({
+      code: 0,
+      msg: retStr
+    }));
+  })
 })
 
 app.get('/food', function (req, res) {
@@ -34,8 +50,13 @@ app.get('/food', function (req, res) {
       //res.send(JSON.stringify(response.jsonBody));
       response.jsonBody.businesses.forEach(ele => {
         retStr += ele.name + " is around " + Math.floor(ele.distance) + " meters away. " 
+        //location is possible
       });
-      res.send(retStr);
+      
+      res.send(JSON.stringify({
+        code: 0,
+        msg: retStr
+      }));
     } else{
       res.send(JSON.stringify({
         code: 0,

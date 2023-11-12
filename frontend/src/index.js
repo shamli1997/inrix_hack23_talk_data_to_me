@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 import Settings from "./routes/Settings";
 import Home from "./routes/Home";
-import Reports from "./routes/Reports";
 import Navbar from "./components/Navbar";
 import "./App.css";
 
@@ -20,16 +19,6 @@ const AppLayout = () => (
     <Outlet />
   </>
 );
-
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route element={<AppLayout />}>
-//       <Route path="/" element={<Home />} />
-//       <Route path="/products" element={<Products />} />
-//       <Route path="/reports" element={<Reports />} />
-//     </Route>
-//   )
-// );
 
 const router = createBrowserRouter([
   {
@@ -43,11 +32,6 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Settings />,
       }
-      // ,
-      // {
-      //   path: "reports",
-      //   element: <Reports />,
-      // },
     ],
   },
 ]);
