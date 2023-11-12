@@ -61,3 +61,7 @@ Talk Data to Me is a voice assistant system designed to enhance your daily commu
 1. `cd frontend`
 2. `npm install`
 3. `npm start`
+
+## Verify Microservices Running:
+
+Open your browser and navigate to the endpoints of each microservice (e.g., http://localhost:service1_port, http://localhost:service2_port) to ensure that the microservices are running successfully.
