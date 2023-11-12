@@ -30,10 +30,10 @@ function Home() {
       <div>
           <div className="container">
               <h2 className="page-title">Talk Data to Me</h2>
-              <br/>
-              <br/>
-                <div className="main-content">
-                    {transcript}
+                <div clasName="mainContentContainer">
+                    <div className="main-content">
+                        {transcript}
+                    </div>
                 </div>
 
                 <div className="btn-style">
