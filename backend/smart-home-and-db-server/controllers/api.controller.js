@@ -150,7 +150,7 @@ const getRecommendation = async (req, res) => {
             "Game of Thrones",
             "Fleabag",
             "The Umbrella Academy",
-            "The Queen's Gambit",
+            "The Queen's Gambit!",
             "Ted Lasso",
             "The Falcon and the Winter Soldier",
             "WandaVision",
@@ -186,10 +186,10 @@ const callRouting = async (req, res) => {
                 var time = response.data.time;
                 console.log('time',time);
             }
-            setInterval(function () {
+            setTimeout(function () {
                 setHeaterOn();
             }, time*1000);
-            setInterval(function () {
+            setTimeout(function () {
                 setLightOn();
             }, (time+2)*1000);
             res.send({
