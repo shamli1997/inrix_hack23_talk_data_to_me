@@ -18,3 +18,21 @@ Talk Data to Me is a voice assistant system designed to enhance your daily commu
    - Check the probability of finding parking near your favorite grocery store.
 6. Preconditioning the Living Room
    - Prepare your living room for your arrival by turning on the heater and lights
+
+## Services and Technologies
+
+1. Location Service
+
+   - Consumes INRIX APIs to provide routing information, parking probabilities.
+
+2. Smart Home Service
+
+   - Manipulates user data to control home devices such as heaters and lights.
+
+3. Entertainment Service
+   - Handles third-party APIs to suggest TV shows, get Calendar events and restaurant suggestions based on user mood.
+
+# Set up Backend (Node.js and Express.js)
+
+1. Clone the Repository
+   `git clone https://github.com/shamli1997/inrix_hack23_talk_data_to_me.git `
