@@ -32,7 +32,7 @@ Talk Data to Me is a voice assistant system designed to enhance your daily commu
 3. Entertainment Server
    - Handles third-party APIs to suggest TV shows, get Calendar events and restaurant suggestions based on user mood.
 
-### Set up Backend Microservices(Node.js and Express.js)
+### Set up Backend Microservices (Node.js and Express.js)
 
 1. Clone the Repository
    `git clone https://github.com/shamli1997/inrix_hack23_talk_data_to_me.git`
