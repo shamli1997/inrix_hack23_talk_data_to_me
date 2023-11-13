@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Talk Data to Me is a voice assistant system designed to enhance your daily commute and provide valuable information and services based on your needs. The project integrates INRIX technologies to offer a seamless and personalized experience during your journey.
+Talk Data to Me is a voice assistant system designed to enhance your daily commute and provide valuable information and services based on your needs. The project integrates INRIX APIs with other Public APIs to offer a seamless and personalized experience during your journey.
 
 ## User Journey
 
